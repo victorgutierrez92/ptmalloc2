@@ -3,7 +3,7 @@
 Implementación de la librería [ptmalloc2](http://www.malloc.de/en/)
 
 ## Introducción
-Implementación de la librería [ptmalloc2](http://www.malloc.de/en/) para el estudio del la gestión de memoria dinámica dentro de los ejecutables ELF
+Ejemplo de implementación de la librería [ptmalloc2](http://www.malloc.de/en/) para el estudio del la gestión de memoria dinámica dentro de los ejecutables ELF
 
 ### Implementación
 

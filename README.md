@@ -17,7 +17,7 @@ Integración de la librería
 gcc example.c libmalloc.a -pthread -o example
 ```
 
-Ejemplo salida
+### Demostración
 ```
 victor@ubuntu:~/Desktop$ ./ejemplo 
 [DEBUG] Llamada malloc(), return: 0x08050008 (bytes=512)

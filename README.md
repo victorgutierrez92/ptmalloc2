@@ -7,12 +7,12 @@ Implementación de la librería [ptmalloc2](http://www.malloc.de/en/) para el es
 
 ### Implementación
 
-* Compilar ptmalloc2
+1. Compilar ptmalloc2
 ```
 make linux-pthread
 ```
 
-* Integración de la librería
+2. Integración de la librería
 ```
 gcc example.c libmalloc.a -pthread -o example
 ```

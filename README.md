@@ -16,3 +16,11 @@ Integración de la librería
 ```
 gcc example.c libmalloc.a -pthread -o example
 ```
+
+Ejemplo salida
+```
+victor@ubuntu:~/Desktop$ ./ejemplo 
+[DEBUG] Llamada malloc(), return: 0x08050008 (bytes=512)
+[DEBUG] Llamada malloc(), return: 0x08050210 (bytes=512)
+[DEBUG] Llamada unlink(), línea 4260, archivo malloc.c
+```

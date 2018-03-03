@@ -3,6 +3,8 @@ typedef int bool;
 #define false 0
 
 bool debug_unlink = true;
+bool debug_malloc = true;
+
 /* Malloc implementation for multiple threads without lock contention.
    Copyright (C) 1996-2002, 2003, 2004 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
@@ -3375,6 +3377,8 @@ public_mALLOc(size_t bytes)
     (void)mutex_unlock(&ar_ptr->mutex);
   assert(!victim || chunk_is_mmapped(mem2chunk(victim)) ||
 	 ar_ptr == arena_for_chunk(mem2chunk(victim)));
+  if(debug_malloc)
+	fprintf(stderr, "[DEBUG] Llamada malloc(), return: 0x%08x (bytes=%d)\n", victim, bytes);
   return victim;
 }
 #ifdef libc_hidden_def
@@ -4024,7 +4028,7 @@ _int_malloc(mstate av, size_t bytes)
 	if ((unsigned long)(size) >= (unsigned long)(nb)) {
 	  remainder_size = size - nb;
 	  if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
 	  unlink(victim, bck, fwd);
 
 	  /* Exhaust */
@@ -4253,7 +4257,7 @@ _int_free(mstate av, Void_t* mem)
         size += prevsize;
         p = chunk_at_offset(p, -((long) prevsize));
 	if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
         unlink(p, bck, fwd);
       }
 
@@ -4264,7 +4268,7 @@ _int_free(mstate av, Void_t* mem)
         /* consolidate forward */
         if (!nextinuse) {
 	  if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
           unlink(nextchunk, bck, fwd);
           size += nextsize;
         } else
@@ -4431,7 +4435,7 @@ static void malloc_consolidate(av) mstate av;
             size += prevsize;
             p = chunk_at_offset(p, -((long) prevsize));
 	    if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
             unlink(p, bck, fwd);
           }
 
@@ -4441,7 +4445,7 @@ static void malloc_consolidate(av) mstate av;
             if (!nextinuse) {
               size += nextsize;
 	      if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
               unlink(nextchunk, bck, fwd);
             } else
 	      clear_inuse_bit_at_offset(nextchunk, 0);
@@ -4549,7 +4553,7 @@ _int_realloc(mstate av, Void_t* oldmem, size_t bytes)
                (unsigned long)(nb)) {
         newp = oldp;
 	if(debug_unlink)
-	  	printf("[DEBUG] Llamada Unlink(), linea %d, archivo %s\n", __LINE__+1, __FILE__);
+	  	fprintf(stderr, "[DEBUG] Llamada unlink(), línea %d, archivo %s\n", __LINE__, __FILE__);
         unlink(next, bck, fwd);
       }
 
